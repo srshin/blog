@@ -22,7 +22,8 @@ pip install tensorflow==1.3.0
 https://ffmpeg.zeranoe.com/builds/  
 환경변수설정 path에 추가 : D:\BigData\ffmpeg-4.1.1-win64-static\bin
 
-### audio/text/video file 받기
+### audio/text/video file 받기 : news_ids.json, audio, assets, video files 생성
+* 하나의 .wav에 하나의 .txt 
 * download file
 ```
 python3 -m datasets.son.download
@@ -38,7 +39,7 @@ python3 -m datasets.son.download
     #makedirs(asset_dir)
     #makedirs(audio_dir)
 ```
-* Segment all audios on silence.
+* Segment all audios on silence :  한개의 .wav가 30여개의  .wav로 나눠짐
 ```
 python -m audio.silence --audio_pattern "./datasets/son/audio/*.wav" --method=pydub
 ```
@@ -60,7 +61,8 @@ python -m audio.silence --audio_pattern "./datasets/son/audio/*.wav" --method=py
     │       ├── 2.ts
     │       └── ...
 ```
-### Google Speech Recognition API로 segmented aduio에서 text 추출
+### Google Speech Recognition API로 segmented aduio에서 text 추출 : recognition.json 생성 
+* 하나의 .wav에 하나의 .txt가 생김. 
 * api key받기  
 https://cloud.google.com/speech-to-text/  
 * 클라우드 홈  
@@ -74,13 +76,15 @@ pip install google-cloud-speech
 pip install --upgrade google-cloud-storage
 python -m recognition.google --audio_pattern "./datasets/son/audio/*.*.wav"
 ```
-### training set 준비
+### training set 준비  : alignment.json 생성 
 * original text와 google에서 나온 text비교
 ```
 python -m recognition.alignment --recognition_path "./datasets/son/recognition.json" --score_threshold=0.5
 ```
-
-
+* numpy 생성 : data/*.npz 생성
+```
+python -m datasets.generate_data ./datasets/son/alignment.json
+```
 
 
 
