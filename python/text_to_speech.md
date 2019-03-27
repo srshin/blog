@@ -25,7 +25,7 @@ https://ffmpeg.zeranoe.com/builds/
 ### audio/text/video file 받기 : news_ids.json, audio, assets, video files 생성
 * download file
 ```
-python3 -m datasets.son.download
+python -m datasets.son.download
 ```
 * encoding error발생 
 ```
@@ -71,10 +71,13 @@ https://console.cloud.google.com/home/dashboard?project=sharp-messenger-235609
 * 환경 설정  
 GOOGLE_APPLICATION_CREDENTIALS="[PATH]"   
 D:\BigData\Download\My First Project-e0b0d2e75c3c.json  
-* audios에서 text추출
+* install package
 ```
 pip install google-cloud-speech
 pip install --upgrade google-cloud-storage
+```
+* audios에서 text추출
+```
 python -m recognition.google --audio_pattern "./datasets/son/audio/*.*.wav"
 ```
 ### training set 준비  : alignment.json 생성 
