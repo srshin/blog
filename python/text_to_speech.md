@@ -23,7 +23,6 @@ https://ffmpeg.zeranoe.com/builds/
 환경변수설정 path에 추가 : D:\BigData\ffmpeg-4.1.1-win64-static\bin
 
 ### audio/text/video file 받기 : news_ids.json, audio, assets, video files 생성
-* 하나의 .wav에 하나의 .txt 
 * download file
 ```
 python3 -m datasets.son.download
@@ -50,6 +49,8 @@ python -m audio.silence --audio_pattern "./datasets/son/audio/*.wav" --method=py
     │   ├── news_ids.json
     │   └── audio
     │       ├── 1.wav
+    │       ├── 1.00001.wav
+    │       ├── 1....wav
     │       ├── 2.wav
     │       └── ...
     │   └── assets
@@ -62,7 +63,7 @@ python -m audio.silence --audio_pattern "./datasets/son/audio/*.wav" --method=py
     │       └── ...
 ```
 ### Google Speech Recognition API로 segmented aduio에서 text 추출 : recognition.json 생성 
-* 하나의 .wav에 하나의 .txt가 생김. 
+* segmented .wav당 해당하는 .txt가 audio 폴더에 생김. 
 * api key받기  
 https://cloud.google.com/speech-to-text/  
 * 클라우드 홈  
@@ -85,7 +86,17 @@ python -m recognition.alignment --recognition_path "./datasets/son/recognition.j
 ```
 python -m datasets.generate_data ./datasets/son/alignment.json
 ```
-
+### Training
+* hparams.py 수정.
+(Change cleaners in hparams.py from korean_cleaners to english_cleaners to train with English dataset)
+```
+    #'cleaners': 'english_cleaners', 
+    'cleaners': 'korean_cleaners', 
+```
+* Train a single-speaker model 
+```
+python train.py --data_path=datasets/son
+```
 
 
 
