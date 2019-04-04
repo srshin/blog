@@ -20,7 +20,7 @@ difftool.sourcetree.cmd='C:/Program Files/KDiff3/kdiff3.exe' "$LOCAL" "$REMOTE"
 mergetool.sourcetree.cmd='C:/Program Files/KDiff3/kdiff3.exe' "$BASE" "$LOCAL" "$REMOTE" -o "$MERGED"
 mergetool.sourcetree.trustexitcode=true
 ```
-## Repository 만들기[1] : local에서 생성  
+## Repository 만들기[1] 수동 : local에서 생성해서 수동으로 가져오는 방법   
 ### folder 생성
 ```
 D:\BigData\Git>mkdir gitTutorial
@@ -52,7 +52,7 @@ From https://github.com/srshin/bigdata
  * [new branch]      master     -> origin/master
 ```
 pull : 자동 merge까지 수행
-## Repository 만들기[2] : clone remote   
+## Repository 만들기[2] 자동 : clone remote (folder생성 및 가져오기까지 자동으로)   
 ```
 D:\BigData\Git\gitTutorial>git clone https://github.com/srshin/bigdata.git
 Cloning into 'bigdata'...
@@ -79,19 +79,6 @@ On branch master
 Your branch is up to date with 'origin/master'.
 nothing to commit, working tree clean
 ```
-### create/modify new file : UNSTAGE state
-```
-D:\BigData\Git\bigdata>git status
-On branch master
-Your branch is up to date with 'origin/master'.
-Changes to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-        new file:   new.md
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-        modified:   new.md
-```
 ### add new file : UNSTAGE  -> STAGED state
 ```
 D:\BigData\Git\bigdata>git add  new.md
@@ -102,6 +89,19 @@ Changes to be committed:
   (use "git reset HEAD <file>..." to unstage)
         new file:   new.md
 ```
+### git commit
+```
+D:\BigData\Git\bigdata>git commit -m "first commit by commandline"
+[master 9e71888] first commit by commandline
+ 1 file changed, 4 insertions(+)
+ create mode 100644 new.md
+```
+* commit과 add를 동시에
+```
+D:\BigData\Git\bigdata>git commit -a -m "first commit by commandline"
+[master e02b4bf] first commit by commandline
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+```
 ### .gitignore 
 git folder에 있으나 관리하지 않을 파일들 정의
 ### diff
@@ -110,16 +110,6 @@ working directory :
 D:\BigData\Git\bigdata>git diff
 staging area : 
 D:\BigData\Git\bigdata>git diff --staged
-```
-### git commit
-```
-D:\BigData\Git\bigdata>git commit -m "first commit by commandline"
-[master 9e71888] first commit by commandline
- 1 file changed, 4 insertions(+)
- create mode 100644 new.md
-D:\BigData\Git\bigdata>git commit -a -m "first commit by commandline"
-[master e02b4bf] first commit by commandline
- 1 file changed, 2 insertions(+), 1 deletion(-)
 ```
 ## remote 관리 
 ### remote에 파일 올리기
@@ -207,17 +197,4 @@ D:\BigData\Git\bigdata>git branch -vv
 3. merge remote branch
 ```
 git merge origin/serverfix 
-```
-### push 
-```
-D:\BigData\Git\bigdata>git push origin master
-Enumerating objects: 5, done.
-Counting objects: 100% (5/5), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (3/3), done.
-Writing objects: 100% (3/3), 289 bytes | 289.00 KiB/s, done.
-Total 3 (delta 2), reused 0 (delta 0)
-remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-To https://github.com/srshin/bigdata.git
-   e02b4bf..93914b2  master -> master
 ```
