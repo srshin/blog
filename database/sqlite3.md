@@ -49,6 +49,7 @@ update Student set name = 'aaa' where id = 1;
 ### delete
 ```
 delete from Student where id = 3;
+sqlite> delete from Student where id not in (select leader from Club);
 ```
 ### join
 ```
@@ -72,4 +73,9 @@ create trigger tr_student_insert
 insert into Student(name) values('김삼수');
 select * from StudentHistory;
 
+```
+### sequence 확인
+```
+sqlite> select * from sqlite_sequence;
+sqlite> update sqlite_sequence set seq=2 where name='Student';
 ```
